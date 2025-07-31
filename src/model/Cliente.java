@@ -32,4 +32,9 @@ public class Cliente {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString(){
+        return "Nome: " + getNome() + ", Email: " + getEmail() + ", ID: " + getId();
+    }
 }

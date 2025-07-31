@@ -14,6 +14,10 @@ public class Dados {
         clientes.add(cliente);
     }
 
+    public static void removerCliente(Cliente cliente){
+        clientes.remove(cliente);
+    }
+
     public static void adicionarItemEstoque(ItemEstoque item) {
         itemEstoques.add(item);
     }
@@ -24,5 +28,9 @@ public class Dados {
 
     public static List<ItemEstoque> getItemEstoques() {
         return new ArrayList<>(itemEstoques);
+    }
+
+    public static boolean verificaListaVazia(List<?> l){
+        return l.isEmpty();
     }
 }
