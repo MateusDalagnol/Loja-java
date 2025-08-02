@@ -6,12 +6,9 @@ public class Item {
     private String tipo;
     private String nome;
     private UnidadeMedida unidadeMedida;
-    private int id;
+    private String id;
 
-    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, int id) {
-        if (id <= 0) {
-            throw new IllegalArgumentException("ID deve ser maior que zero.");
-        }
+    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, String id) {
         this.tipo = tipo;
         this.nome = nome;
         this.unidadeMedida = unidadeMedida;
@@ -42,7 +39,15 @@ public class Item {
         this.unidadeMedida = unidadeMedida;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString(){
+        return "Tipo: " + getTipo() + 
+        " || Nome: " + getNome() + 
+        " || Unidade de medida: " + getUnidadeMedida() + 
+        " || ID: " + getId();
     }
 }

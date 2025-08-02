@@ -22,6 +22,10 @@ public class Dados {
         itemEstoques.add(item);
     }
 
+    public static void removerItemEstoque(ItemEstoque item) {
+        itemEstoques.remove(item);
+    }
+
     public static List<Cliente> getClientes() {
         return new ArrayList<>(clientes); // retorna uma cópia, evitando alteração direta
     }

@@ -1,20 +1,17 @@
 package model;
 
-public class ItemEstoque {
+import enums.UnidadeMedida;
 
-    private Item item;
+public class ItemEstoque extends Item {
+
     private int quantidade;
 
-    public ItemEstoque(Item item, int quantidade) {
+    public ItemEstoque(String tipo, String nome, UnidadeMedida unidadeMedida, String id, int quantidade) {
+        super(tipo, nome, unidadeMedida, id);
         if (quantidade < 0) {
-            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
+            throw new IllegalArgumentException("O valor não pode ser negativo.");
         }
-        this.item = item;
         this.quantidade = quantidade;
-    }
-
-    public Item getItem() {
-        return item;
     }
 
     public int getQuantidade() {
@@ -23,8 +20,10 @@ public class ItemEstoque {
 
     public void setQuantidade(int quantidade) {
         if (quantidade < 0) {
-            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
+            throw new IllegalArgumentException("O valor não pode ser negativo.");
         }
         this.quantidade = quantidade;
+
     }
+
 }
