@@ -6,6 +6,8 @@ import java.util.Scanner;
 import application.Dados;
 import enums.UnidadeMedida;
 import model.ItemEstoque;
+import model.ItemPedido;
+import model.Pedido;
 
 public class ItemService {
 
@@ -50,21 +52,8 @@ public class ItemService {
             return;
         }
 
-        System.out.print("Id: ");
-        String id = sc.nextLine();
-
-        boolean encontrado = false;
-        for (ItemEstoque item : iList) {
-            if (item.getId().equalsIgnoreCase(id)) {
-                Dados.removerItemEstoque(item);
-                System.out.println("Item removido.");
-                encontrado = true;
-                break;
-            }
-        }
-        if (!encontrado) {
-            System.out.println("Item não encontrado.");
-        }
+        ItemEstoque itemEstoque = buscaItem(sc);
+        Dados.removerItemEstoque(itemEstoque);
 
     }
 
@@ -88,11 +77,33 @@ public class ItemService {
         System.out.print("Nome: ");
         String nome = sc.nextLine();
         System.out.print("Id: ");
-        String id = sc.nextLine();
+        int id = sc.nextInt();
 
         for (ItemEstoque item : iList) {
-            if (item.getNome().equalsIgnoreCase(nome) && item.getId().equalsIgnoreCase(id)) {
+            if (item.getNome().equalsIgnoreCase(nome) && item.getId() == id) {
                 return item;
+            }
+        }
+        System.out.println("Item não encontrado.");
+        return null;
+
+    }
+
+    public ItemPedido buscaItemPedido(Pedido pedido, Scanner sc) {
+        List<ItemPedido> itemPedidoList = pedido.getItensPedido();
+        if (Dados.verificaListaVazia(itemPedidoList)) {
+            System.out.println("Não a Item cadastrados");
+            return null;
+        }
+
+        System.out.print("Nome: ");
+        String nome = sc.nextLine();
+        System.out.print("Id: ");
+        int id = sc.nextInt();
+
+        for (ItemPedido itemPedido : itemPedidoList) {
+            if (itemPedido.getNome().equalsIgnoreCase(nome) && itemPedido.getId() == id) {
+                return itemPedido;
             }
         }
         System.out.println("Item não encontrado.");

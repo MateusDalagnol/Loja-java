@@ -27,18 +27,11 @@ public class ClienteService {
             return;
         }
 
-        System.out.print("Id: ");
-        int id = sc.nextInt();
-
-        for (Cliente cliente : clist) {
-            if (cliente.getId() == id) {
-                Dados.removerCliente(cliente);
-            } else {
-                System.out.println("Usuario não existente");
-            }
-        }
-
+        Cliente cliente = buscaCliente(sc);
+        Dados.removerCliente(cliente);
     }
+
+
 
     public void verificaCliente(Scanner sc) {
         Cliente cliente = buscaCliente(sc);
@@ -65,10 +58,9 @@ public class ClienteService {
         for (Cliente cliente : clist) {
             if (cliente.getNome().equals(nome) && cliente.getId() == id) {
                 return cliente;
-            } else {
-                System.out.println("Usuario não existente");
             }
         }
+        System.out.println("Usuario não existente");
         return null;
 
     }

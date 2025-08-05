@@ -3,17 +3,21 @@ package model;
 import enums.UnidadeMedida;
 
 public class Item {
+    private int id;
+    private static int nextId = 0;
     private String tipo;
     private String nome;
     private UnidadeMedida unidadeMedida;
-    private String id;
+    private String codigoBarras;
     private double preco;
 
-    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, String id, double preco) {
+
+    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, String codigoBarras, double preco) {
         this.tipo = tipo;
         this.nome = nome;
         this.unidadeMedida = unidadeMedida;
-        this.id = id;
+        id = nextId++;
+        this.codigoBarras = codigoBarras;
         this.preco = preco;
     }
 
@@ -41,19 +45,24 @@ public class Item {
         this.unidadeMedida = unidadeMedida;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-     public double getPreco() {
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public double getPreco() {
         return preco;
     }
-    
+
     @Override
-    public String toString(){
-        return "Tipo: " + getTipo() + 
-        " || Nome: " + getNome() + 
-        " || Unidade de medida: " + getUnidadeMedida() + 
-        " || ID: " + getId();
+    public String toString() {
+        return "ID: " + getId() +
+                " || Tipo: " + getTipo() +
+                " || Nome: " + getNome() +
+                " || Unidade de medida: " + getUnidadeMedida() +
+                " || ID: " + getCodigoBarras();
     }
 }

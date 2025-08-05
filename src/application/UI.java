@@ -165,14 +165,15 @@ public class UI {
     public static void menuPedido(Scanner sc) {
         char opcao;
         ClienteService cs = new ClienteService();
-
+        PedidoService ps = new PedidoService();
 
         do {
             System.out.println("\n=====Menu Pedido=====");
             System.out.println("1 - Cadastrar novo pedido\n" +
                     "2 - Remover pedido\n" +
                     "3 - Alterar pedido\n" +
-                    "4 - Listar pedidos\n");
+                    "4 - Listar pedidos\n" +
+                    "0 - Voltar para o menu\n");
 
             System.out.print("Opção: ");
             opcao = sc.next().charAt(0);
@@ -182,13 +183,18 @@ public class UI {
                     sc.nextLine();
                     System.out.println("Adicione um cliente ao pedido: ");
                     Cliente cliente = cs.buscaCliente(sc);
+                    if(cliente == null){
+                        return;
+                    }
                     menuCriarPedido(sc, cliente);
                     return;
                 case '2':
                     sc.nextLine();
+                    ps.removerPedido(sc);
                     break;
                 case '3':
                     sc.nextLine();
+                    menuAlterarPedido(sc, ps.buscaPedido(sc));
                     break;
                 case '4':
                     sc.nextLine();
@@ -224,7 +230,8 @@ public class UI {
                     "2 - Remover Item\n" +
                     "3 - Concluir pedido\n" +
                     "4 - Mostar resumo do pedido\n" +
-                    "5 - Cancelar pedido\n");
+                    "5 - Mostar estoque\n" +
+                    "6 - Cancelar pedido\n");
 
             System.out.print("Opção: ");
             opcao = sc.next().charAt(0);
@@ -245,7 +252,19 @@ public class UI {
                 case '4':
                     System.out.println(novoPedido);
                     break;
-                case '5':
+                case '5':{
+                    List<ItemEstoque> iList = Dados.getItemEstoques();
+                    if (Dados.verificaListaVazia(iList)) {
+                        System.out.println("Lista Vazia");
+                        break;
+                    }
+                    System.out.println("=====Lista de itens cadastrado=====");
+                    for (Item eItem : iList) {
+                        System.out.println(eItem);
+                    }
+                    break;
+                }
+                case '6':
                     System.out.println("\nVoltando para o menu principal...\n");
                     return;
                 default:
@@ -253,5 +272,9 @@ public class UI {
             }
 
         } while (opcao != '0');
+    }
+
+    public static void menuAlterarPedido(Scanner sc, Pedido pedido){
+
     }
 }
