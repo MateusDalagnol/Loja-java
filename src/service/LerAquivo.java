@@ -22,7 +22,7 @@ public class LerAquivo {
             while ((linha = br.readLine()) != null) {
                 String[] valor = linha.split(",");
                 Dados.adicionarItemEstoque(new ItemEstoque(valor[0], valor[1], UnidadeMedida.valueOf(valor[2]),
-                        valor[3], Integer.parseInt(valor[4])));
+                        valor[3], Double.parseDouble(valor[4]), Integer.parseInt(valor[5])));
             }
         } catch (FileNotFoundException e) {
             System.err.println("Arquivo não encontrado: " + arquivo);

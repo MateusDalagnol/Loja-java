@@ -7,12 +7,14 @@ public class Item {
     private String nome;
     private UnidadeMedida unidadeMedida;
     private String id;
+    private double preco;
 
-    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, String id) {
+    public Item(String tipo, String nome, UnidadeMedida unidadeMedida, String id, double preco) {
         this.tipo = tipo;
         this.nome = nome;
         this.unidadeMedida = unidadeMedida;
         this.id = id;
+        this.preco = preco;
     }
 
     public String getTipo() {
@@ -43,6 +45,10 @@ public class Item {
         return id;
     }
 
+     public double getPreco() {
+        return preco;
+    }
+    
     @Override
     public String toString(){
         return "Tipo: " + getTipo() + 

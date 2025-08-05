@@ -1,20 +1,15 @@
 package model;
 
-public class ItemPedido {
+import enums.UnidadeMedida;
 
-    private Item item;
+public class ItemPedido extends Item{
+
     private int quantidade;
 
-    public ItemPedido(Item item, int quantidade) {
-        if (quantidade < 0) {
-            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
-        }
-        this.item = item;
+    public ItemPedido(String tipo, String nome, UnidadeMedida unidadeMedida, String id, double preco,
+            int quantidade) {
+        super(tipo, nome, unidadeMedida, id, preco);
         this.quantidade = quantidade;
-    }
-
-    public Item getItem() {
-        return item;
     }
 
     public int getQuantidade() {
@@ -27,4 +22,5 @@ public class ItemPedido {
         }
         this.quantidade = quantidade;
     }
+    
 }

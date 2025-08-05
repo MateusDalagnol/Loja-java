@@ -15,6 +15,8 @@ public class ItemService {
     String tipo = sc.nextLine();
     System.out.print("Nome: ");
     String nome = sc.nextLine();
+    System.out.print("Preço: ");
+    double preco = sc.nextDouble();
     UnidadeMedida unidadeMedida = null;
     while (unidadeMedida == null) {
         System.out.print("Unidade de Medida (LITRO, QUILOGRAMA, UNIDADE): ");
@@ -33,7 +35,7 @@ public class ItemService {
     sc.nextLine();
 
     try {
-        return new ItemEstoque(tipo, nome, unidadeMedida, id, quantidade);
+        return new ItemEstoque(tipo, nome, unidadeMedida, id, preco, quantidade);
     } catch (IllegalArgumentException e) {
         System.out.println("Erro ao cadastrar item: " + e.getMessage());
         return null;
@@ -72,7 +74,7 @@ public class ItemService {
         if (Item != null) {
             System.out.println("Item encontrado: " + Item.toString());
         } else {
-            System.out.println("Usuario não existente");
+            System.out.println("Item não existente");
         }
     }
 

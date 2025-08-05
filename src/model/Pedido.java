@@ -25,7 +25,7 @@ public class Pedido {
     }
 
     public List<ItemPedido> getItensPedido() {
-        return Collections.unmodifiableList(itensPedido);
+        return itensPedido;
     }
 
     public Date getData() {
@@ -34,5 +34,10 @@ public class Pedido {
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente: " + cliente + ", itensPedido: " + itensPedido + ", data: " + data;
     }
 }
