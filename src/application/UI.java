@@ -1,9 +1,12 @@
 package application;
 
+import java.lang.ref.Cleaner;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import implementations_dao.DaoFactory;
+import interface_dao.ClienteDao;
 import model.Cliente;
 import model.Item;
 import model.ItemEstoque;
@@ -48,12 +51,13 @@ public class UI {
     public static void menuCliente(Scanner sc) {
         char opcao;
         ClienteService is = new ClienteService();
+        ClienteDao clienteDao = DaoFactory.createClienteDao();
 
         do {
             System.out.println("\n=====MENU CLIENTE=====");
             System.out.println("1 - Cadastrar Cliente\n" +
                     "2 - Remover Cliente\n" +
-                    "3 - Verificar Cliente\n" +
+                    "3 - Buscar Cliente\n" +
                     "4 - Alterar Nome\n" +
                     "5 - Alterar Email\n" +
                     "6 - Listar Clientes\n" +
@@ -64,8 +68,7 @@ public class UI {
             switch (opcao) {
                 case '1':
                     sc.nextLine();
-                    Cliente novoCliente = is.cadastroCliente(sc);
-                    Dados.adicionarCliente(novoCliente);
+                    is.cadastroCliente(sc);
                     break;
                 case '2':
                     sc.nextLine();
@@ -73,7 +76,19 @@ public class UI {
                     break;
                 case '3':
                     sc.nextLine();
-                    is.verificaCliente(sc);
+                    System.out.print("Nome: ");
+                    String nome = sc.nextLine();
+                    List<Cliente> clientes = clienteDao.findByName(nome);
+
+                    if (clientes.isEmpty()) {
+                        System.out.println("Lista Vazia");
+                        break;
+                    }
+                    System.out.println("=====Lista de Cliente Encontrados=====");
+                    for (Cliente eCliente : clientes) {
+                        System.out.println(eCliente);
+                    }
+                    System.out.println(is.buscaCliente(sc));
                     break;
                 case '4':
                     sc.nextLine();
@@ -84,8 +99,8 @@ public class UI {
                     is.alterarEmail(sc);
                     break;
                 case '6':
-                    List<Cliente> cList = Dados.getClientes();
-                    if (Dados.verificaListaVazia(cList)) {
+                    List<Cliente> cList =  clienteDao.findAll();
+                    if (cList.isEmpty()) {
                         System.out.println("Lista Vazia");
                         break;
                     }

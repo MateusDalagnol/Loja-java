@@ -13,6 +13,10 @@ public class Cliente {
         id = nextId++;
     }
 
+    public Cliente() {
+
+    }
+
     public String getNome() {
         return nome;
     }
@@ -35,6 +39,10 @@ public class Cliente {
 
     @Override
     public String toString(){
-        return "Nome: " + getNome() + ", Email: " + getEmail() + ", ID: " + getId();
+        return "ID: " + getId() + ", Nome: " + getNome() + ", Email: " + getEmail();
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

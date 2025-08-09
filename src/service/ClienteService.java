@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import application.Dados;
+import implementations_dao.DaoFactory;
+import interface_dao.ClienteDao;
 import model.Cliente;
 
 public class ClienteService {
 
-    public Cliente cadastroCliente(Scanner sc) {
+    ClienteDao clienteDao = DaoFactory.createClienteDao();
+
+    public void cadastroCliente(Scanner sc) {
 
         System.out.println("Cadastro");
         System.out.print("Nome: ");
@@ -17,7 +21,7 @@ public class ClienteService {
         String email = sc.nextLine();
 
         Cliente cliente = new Cliente(nome, email);
-        return cliente;
+        clienteDao.insert(cliente);
     }
 
     public void removerCliente(Scanner sc) {
@@ -36,33 +40,23 @@ public class ClienteService {
     public void verificaCliente(Scanner sc) {
         Cliente cliente = buscaCliente(sc);
 
-        if (cliente != null) {
-            System.out.println("Cliente encontrado: " + cliente.toString());
-        } else {
+        if (cliente == null) {
             System.out.println("Usuario não existente");
         }
     }
 
     public Cliente buscaCliente(Scanner sc) {
-        List<Cliente> clist = Dados.getClientes();
-        if (Dados.verificaListaVazia(clist)) {
+
+        List<Cliente> clist = clienteDao.findAll();
+        if (clist.isEmpty()) {
             System.out.println("Não a cliente cadastrados");
             return null;
         }
 
-        System.out.print("Nome: ");
-        String nome = sc.nextLine();
-        System.out.print("Id: ");
+        System.out.print("ID: ");
         int id = sc.nextInt();
 
-        for (Cliente cliente : clist) {
-            if (cliente.getNome().equals(nome) && cliente.getId() == id) {
-                return cliente;
-            }
-        }
-        System.out.println("Usuario não existente");
-        return null;
-
+        return clienteDao.findById(id);
     }
 
     public void alterarNome(Scanner sc) {
@@ -74,7 +68,8 @@ public class ClienteService {
         sc.nextLine();
         String novoNome = sc.nextLine();
 
-        cliente.setNome(novoNome);
+        clienteDao.updateNome(novoNome, cliente.getId());
+
     }
 
     public void alterarEmail(Scanner sc) {
@@ -86,7 +81,7 @@ public class ClienteService {
         sc.nextLine();
         String novoEmail = sc.nextLine();
 
-        cliente.setEmail(novoEmail);
+        clienteDao.updateEmail(novoEmail, cliente.getId());
     }
 
 }
