@@ -2,7 +2,7 @@ package implementations_dao;
 
 import db.DB;
 import db.DbException;
-import interface_dao.ClienteDao;
+import interfaces_dao.ClienteDao;
 import model.Cliente;
 import java.sql.*;
 import java.util.ArrayList;
@@ -86,6 +86,37 @@ public class ClienteDaoJDBC implements ClienteDao {
 
     @Override
     public void deleteById(Integer id) {
+        PreparedStatement st = null;
+
+        try{
+            st = conn.prepareStatement("UPDATE cliente SET ativo = FALSE WHERE id = ?");
+
+            st.setInt(1, id);
+
+            conn.setAutoCommit(false);
+
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new DbException("Nenhum cliente foi deletado.");
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException ex) {
+                throw new DbException("Erro no rollback: " + ex.getMessage());
+            }
+            throw new DbException(e.getMessage());
+        } finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.err.println("Erro ao resetar autoCommit: " + e.getMessage());
+            }
+            DB.closeStatement(st);
+        }
 
     }
 
@@ -95,7 +126,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         ResultSet rs = null;
 
         try {
-            st = conn.prepareStatement("SELECT * FROM cliente WHERE Id = ?");
+            st = conn.prepareStatement("SELECT * FROM cliente WHERE Id = ? AND ativo = TRUE");
 
             st.setInt(1, id);
             rs = st.executeQuery();
@@ -122,7 +153,7 @@ public class ClienteDaoJDBC implements ClienteDao {
         ResultSet rs = null;
 
         try {
-            st = conn.prepareStatement("SELECT * FROM cliente ORDER BY Nome");
+            st = conn.prepareStatement("SELECT * FROM cliente WHERE ativo = TRUE ORDER BY Nome");
 
             rs = st.executeQuery();
 
@@ -152,9 +183,9 @@ public class ClienteDaoJDBC implements ClienteDao {
         List<Cliente> clientes = new ArrayList<>();
 
         try {
-            st = conn.prepareStatement("SELECT * FROM cliente WHERE Nome = ?");
+            st = conn.prepareStatement("SELECT * FROM cliente WHERE Nome LIKE ? AND ativo = TRUE");
 
-            st.setString(1, nome);
+            st.setString(1, "%" + nome + "%");
             rs = st.executeQuery();
 
             while(rs.next()){

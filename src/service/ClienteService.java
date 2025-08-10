@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import application.Dados;
 import implementations_dao.DaoFactory;
-import interface_dao.ClienteDao;
+import interfaces_dao.ClienteDao;
 import model.Cliente;
 
 public class ClienteService {
@@ -25,14 +25,19 @@ public class ClienteService {
     }
 
     public void removerCliente(Scanner sc) {
-        List<Cliente> clist = Dados.getClientes();
+        List<Cliente> clist = clienteDao.findAll();
         if (Dados.verificaListaVazia(clist)) {
             System.out.println("Não a cliente cadastrados");
             return;
         }
 
         Cliente cliente = buscaCliente(sc);
-        Dados.removerCliente(cliente);
+        if(cliente == null){
+                System.out.println("Nenhum cliente encontrado com esse ID.");
+                return;
+        }
+        clienteDao.deleteById(cliente.getId());
+
     }
 
 

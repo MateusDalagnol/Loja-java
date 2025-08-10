@@ -1,4 +1,4 @@
-package interface_dao;
+package interfaces_dao;
 
 import model.Cliente;
 import java.util.List;

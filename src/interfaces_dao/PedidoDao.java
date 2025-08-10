@@ -1,4 +1,4 @@
-package interface_dao;
+package interfaces_dao;
 
 public interface PedidoDao {
 }

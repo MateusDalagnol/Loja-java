@@ -1,12 +1,11 @@
 package application;
 
-import java.lang.ref.Cleaner;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import implementations_dao.DaoFactory;
-import interface_dao.ClienteDao;
+import interfaces_dao.ClienteDao;
 import model.Cliente;
 import model.Item;
 import model.ItemEstoque;
@@ -88,7 +87,6 @@ public class UI {
                     for (Cliente eCliente : clientes) {
                         System.out.println(eCliente);
                     }
-                    System.out.println(is.buscaCliente(sc));
                     break;
                 case '4':
                     sc.nextLine();

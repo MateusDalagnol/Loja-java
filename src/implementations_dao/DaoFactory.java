@@ -2,7 +2,7 @@ package implementations_dao;
 
 
 import db.DB;
-import interface_dao.ClienteDao;
+import interfaces_dao.ClienteDao;
 
 public class DaoFactory {
 
